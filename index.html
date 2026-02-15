@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduFlow | Editorial Education Platform</title>
+
+    <!-- 1. Google Fonts: Outfit (Sans) & Playfair Display (Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- 2. Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- 3. Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <!-- 4. Tailwind CSS (CDN with Config) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#666666',
+                        offwhite: '#fafafa',
+                        cardbg: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for specific interactions -->
+    <style>
+        body {
+            background-color: #fafafa;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Class */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fafafa;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3;
+        }
+
+        /* Smooth Hover Transitions */
+        .card-hover {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Image Parallax Container */
+        .parallax-container {
+            perspective: 1000px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <i class="ph-fill ph-circles-three-plus text-2xl group-hover:rotate-180 transition-transform duration-500"></i>
+                <span class="font-serif font-semibold text-xl tracking-tight">EduFlow.</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-secondary">
+                <a href="#" class="hover:text-primary transition-colors">Courses</a>
+                <a href="#" class="hover:text-primary transition-colors">Mentors</a>
+                <a href="#" class="hover:text-primary transition-colors">Resources</a>
+                <button class="flex items-center gap-2 text-primary border-b border-primary pb-0.5 hover:opacity-70 transition-opacity">
+                    <span>Student Login</span>
+                    <i class="ph ph-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="menu-toggle" class="md:hidden text-2xl">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-center items-center gap-8">
+        <button id="menu-close" class="absolute top-6 right-6 text-2xl">
+            <i class="ph ph-x"></i>
+        </button>
+        <a href="#" class="font-serif italic text-3xl">Courses</a>
+        <a href="#" class="font-serif italic text-3xl">Mentors</a>
+        <a href="#" class="font-serif italic text-3xl">Resources</a>
+        <a href="#" class="text-lg border-b border-black">Login</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Hero Left: Text -->
+            <div class="hero-text-content relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-200 bg-white text-xs uppercase tracking-wider mb-6 hero-el opacity-0">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    v4.0 Live System
+                </div>
+                <h1 class="font-serif text-5xl md:text-7xl leading-[1.1] mb-6 hero-el opacity-0">
+                    Master the art of <br>
+                    <span class="italic text-gray-400">digital learning.</span>
+                </h1>
+                <p class="text-secondary text-lg max-w-md mb-8 hero-el opacity-0 leading-relaxed">
+                    A curated collection of architectural logic, design systems, and software engineering courses for the modern era.
+                </p>
+                <div class="flex gap-4 hero-el opacity-0">
+                    <button class="bg-primary text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-transform active:scale-95 flex items-center gap-2">
+                        Start Learning <i class="ph-fill ph-caret-right"></i>
+                    </button>
+                    <button class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                        <i class="ph-fill ph-play"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hero Right: Parallax Cards -->
+            <div id="hero-image-area" class="relative h-[400px] md:h-[500px] w-full parallax-container hidden md:block">
+                <!-- Back Card -->
+                <div id="card-back" class="absolute top-0 right-10 w-64 h-80 bg-gray-200 rounded-lg overflow-hidden shadow-lg opacity-0 translate-y-10">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover opacity-80 mix-blend-multiply">
+                </div>
+                <!-- Front Card -->
+                <div id="card-front" class="absolute top-20 right-40 w-72 h-96 bg-white rounded-lg shadow-2xl p-4 opacity-0 translate-y-10">
+                    <div class="w-full h-full relative rounded overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
+                        <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs font-bold">
+                            FEATURED COURSE
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Container -->
+    <main class="max-w-7xl mx-auto px-6 pb-24 space-y-24">
+        
+        <!-- Section 1: Popular Courses (Dynamic Grid) -->
+        <section>
+            <div class="flex justify-between items-end mb-10 border-b border-gray-200 pb-4">
+                <h2 class="font-serif text-3xl italic">Popular Curriculum</h2>
+                <a href="#" class="text-sm font-medium hover:text-gray-500 transition-colors hidden md:block">View all courses</a>
+            </div>
+            
+            <!-- Grid injected by JS -->
+            <div id="popular-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-10"></div>
+        </section>
+
+        <!-- Section 2: Latest Updates (Dynamic Grid) -->
+        <section>
+            <div class="flex items-center gap-3 mb-10">
+                <span class="w-8 h-[1px] bg-black"></span>
+                <h2 class="font-serif text-2xl">Fresh Workshops</h2>
+            </div>
+
+            <!-- Grid injected by JS -->
+            <div id="latest-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 bg-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <i class="ph-fill ph-circles-three-plus text-xl"></i>
+                        <span class="font-serif font-bold text-lg">EduFlow.</span>
+                    </a>
+                    <p class="text-secondary text-sm max-w-sm leading-relaxed">
+                        Redefining the educational landscape with modern tools, editorial design, and a focus on student outcomes.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-serif italic mb-4">Platform</h4>
+                    <ul class="space-y-2 text-sm text-secondary">
+                        <li><a href="#" class="hover:text-primary">Browse All</a></li>
+                        <li><a href="#" class="hover:text-primary">Instructors</a></li>
+                        <li><a href="#" class="hover:text-primary">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif italic mb-4">Social</h4>
+                    <ul class="space-y-2 text-sm text-secondary">
+                        <li><a href="#" class="hover:text-primary">Instagram</a></li>
+                        <li><a href="#" class="hover:text-primary">Twitter / X</a></li>
+                        <li><a href="#" class="hover:text-primary">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex justify-between items-center text-xs text-gray-400 border-t border-gray-100 pt-8">
+                <p>&copy; 2023 EduFlow Inc.</p>
+                <div class="flex gap-4">
+                    <span>Privacy</span>
+                    <span>Terms</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        // --- 1. DATA SOURCE ---
+        
+        const popularCourses = [
+            {
+                title: "Design Systems",
+                author: "Sarah J.",
+                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=400",
+                rating: 4.9,
+                students: "12k"
+            },
+            {
+                title: "Modern React",
+                author: "Dev Institute",
+                image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=400",
+                rating: 4.8,
+                students: "8.5k"
+            },
+            {
+                title: "Architecture 101",
+                author: "Prof. Alistair",
+                image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=400",
+                rating: 5.0,
+                students: "2k"
+            },
+            {
+                title: "Data Science",
+                author: "Tech Flow",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400",
+                rating: 4.7,
+                students: "15k"
+            },
+            {
+                title: "UX Psychology",
+                author: "Mia V.",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=400",
+                rating: 4.9,
+                students: "9k"
+            }
+        ];
+
+        const latestUpdates = [
+            {
+                title: "Advanced TypeScript",
+                module: "Module 4: Generics",
+                image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=500",
+                badge: "NEW"
+            },
+            {
+                title: "Sustainable Building",
+                module: "Workshop: Materials",
+                image: "https://images.unsplash.com/photo-1518005052357-e987154dd84d?auto=format&fit=crop&q=80&w=500",
+                badge: "LIVE"
+            },
+            {
+                title: "Financial Modeling",
+                module: "Lecture: Risk",
+                image: "https://images.unsplash.com/photo-1554224155-98406852d009?auto=format&fit=crop&q=80&w=500",
+                badge: null
+            },
+            {
+                title: "Creative Writing",
+                module: "Assignment: Prose",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=500",
+                badge: "UPDATED"
+            }
+        ];
+
+        // --- 2. DOM INJECTION ---
+
+        const popularGrid = document.getElementById('popular-grid');
+        const latestGrid = document.getElementById('latest-grid');
+
+        // Render Popular Courses
+        popularCourses.forEach((course, index) => {
+            const card = document.createElement('div');
+            card.className = 'group cursor-pointer scroll-reveal opacity-0 translate-y-8'; 
+            card.innerHTML = `
+                <div class="relative overflow-hidden rounded-md mb-3 aspect-[3/4] card-hover">
+                    <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    <button class="absolute bottom-4 right-4 bg-white text-black w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <i class="ph-bold ph-plus"></i>
+                    </button>
+                </div>
+                <h3 class="font-bold text-lg leading-tight group-hover:text-gray-600 transition-colors">${course.title}</h3>
+                <p class="text-xs text-secondary mt-1 font-serif italic">${course.author}</p>
+                <div class="flex items-center gap-3 mt-2 text-xs font-medium">
+                    <span class="flex items-center gap-1"><i class="ph-fill ph-star text-yellow-500"></i> ${course.rating}</span>
+                    <span class="text-gray-300">•</span>
+                    <span class="text-secondary">${course.students}</span>
+                </div>
+            `;
+            popularGrid.appendChild(card);
+        });
+
+        // Render Latest Updates
+        latestUpdates.forEach(update => {
+            const card = document.createElement('div');
+            card.className = 'flex gap-4 items-center p-3 rounded-lg hover:bg-white hover:shadow-sm transition-all duration-300 scroll-reveal opacity-0 translate-y-4 border border-transparent hover:border-gray-100 cursor-pointer group';
+            card.innerHTML = `
+                <div class="w-20 h-20 rounded overflow-hidden flex-shrink-0 relative">
+                    <img src="${update.image}" class="w-full h-full object-cover">
+                    ${update.badge ? `<span class="absolute top-0 right-0 bg-primary text-white text-[10px] px-1.5 py-0.5 font-bold">${update.badge}</span>` : ''}
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-sm mb-1 group-hover:text-blue-600 transition-colors">${update.title}</h4>
+                    <p class="text-xs text-secondary font-serif italic mb-2">${update.module}</p>
+                    <div class="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-gray-300 w-2/3"></div>
+                    </div>
+                </div>
+                <button class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                    <i class="ph-bold ph-caret-right"></i>
+                </button>
+            `;
+            latestGrid.appendChild(card);
+        });
+
+        // --- 3. ANIMATION SYSTEM (Anime.js) ---
+
+        // Hero Sequence
+        const tl = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 1200
+        });
+
+        tl
+        .add({
+            targets: '.hero-el',
+            translateY: [20, 0],
+            opacity: [0, 1],
+            delay: anime.stagger(100, {start: 200})
+        })
+        .add({
+            targets: ['#card-back', '#card-front'],
+            translateY: [100, 0],
+            opacity: [0, 1],
+            rotate: function(el, i) { return i === 0 ? [5, -3] : [-5, 0]; }, // slight rotation
+            scale: [0.9, 1],
+            delay: anime.stagger(150),
+            easing: 'spring(1, 80, 10, 0)' // Bouncy spring effect
+        }, '-=800');
+
+        // Scroll Reveal Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    anime({
+                        targets: entry.target,
+                        translateY: [30, 0],
+                        opacity: [0, 1],
+                        easing: 'cubicBezier(.25, .1, .25, 1)',
+                        duration: 800
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // --- 4. INTERACTIONS ---
+
+        // Navbar Glass Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav', 'py-4');
+                navbar.classList.remove('py-6');
+            } else {
+                navbar.classList.remove('glass-nav', 'py-4');
+                navbar.classList.add('py-6');
+            }
+        });
+
+        // Hero Mouse Parallax
+        const heroArea = document.getElementById('hero-image-area');
+        const cardBack = document.getElementById('card-back');
+        const cardFront = document.getElementById('card-front');
+
+        heroArea.addEventListener('mousemove', (e) => {
+            const x = (e.clientX - window.innerWidth / 2) / 25;
+            const y = (e.clientY - window.innerHeight / 2) / 25;
+
+            // Move cards in opposite directions for depth
+            cardBack.style.transform = `translate(${x * -1}px, ${y * -1}px) rotate(-3deg)`;
+            cardFront.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        
+        // Reset on leave
+        heroArea.addEventListener('mouseleave', () => {
+            cardBack.style.transform = `translate(0, 0) rotate(-3deg)`;
+            cardFront.style.transform = `translate(0, 0)`;
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+        });
+
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+            document.body.style.overflow = '';
+        });
+
+    </script>
+</body>
+</html>
